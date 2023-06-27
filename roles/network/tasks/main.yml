@@ -1,0 +1,60 @@
+---
+
+- name: Include os-specific vars
+  include_tasks: 'vars.yml'
+  tags:
+    - network_nameservers
+
+- name: Include distribution installation
+  include: "{{ item }}"
+  with_first_found:
+  - files:
+    - "{{ ansible_distribution }}.yml"
+    - "{{ ansible_os_family }}.yml"
+    skip: true
+
+- name: 'Set hostname'
+  hostname: name="{{ hostname | default(inventory_hostname) }}"
+  when: ansible_virtualization_type != "openvz" and ansible_virtualization_type != "lxc"
+
+- name: 'Check if NetworkManager.conf is exist'
+  stat: path=/etc/NetworkManager/NetworkManager.conf
+  register: networkmanager_conf_file
+
+- name: 'Disable set resolv.conf by NetworkManager'
+  lineinfile: path=/etc/NetworkManager/NetworkManager.conf  regexp='^dns=none' insertafter='^\[main\]' line='dns=none'
+  when: networkmanager_conf_file.stat.exists
+
+- name: 'Set resolv.conf'
+  template: src=resolv.conf.j2 dest=/etc/resolv.conf owner=root group={{ network_system_root_group }} mode=0644
+  when: ansible_virtualization_type != "openvz" or ansible_virtualization_role != "guest"
+  tags:
+    - network_nameservers
+
+- name: 'Edit /etc/hosts'
+  lineinfile: dest=/etc/hosts regexp="^{{ item.key }} " line="{{ item.key }}  {{ item.value }}"
+  with_dict: "{{ hosts }}"
+  when: hosts is defined
+  tags:
+    - hosts
+
+- name: 'Set network IP Aliases'
+  template: src=ifcfg-eth-alias.j2 dest=/etc/sysconfig/network-scripts/ifcfg-{{ item.aliasname }} owner=root group=root mode=0644
+  with_items: "{{ network_ip_aliases | default([]) }}"
+  tags: network_ipaliases
+
+- name: 'Install failover GW bash script'
+  template: src=failover-gw.sh.j2 dest=/opt/admin/bin/failover-gw.sh mode=0555 owner=root group=root
+  when: network_failover_gw | default(False)
+
+- name: 'Copy sytemd unit file for failover-gw sh script'
+  copy: src=failover-gw.service dest=/etc/systemd/system/failover-gw.service owner=root group=root mode=0644
+  when: network_failover_gw | default(False)
+  notify:
+    - reload systemd
+    - restart failover-gw
+
+- name: 'Enabled and Started service'
+  service: name=failover-gw state=started enabled=yes
+  when: network_failover_gw | default(False)
+

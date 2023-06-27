@@ -1,0 +1,15 @@
+- hosts: "{{ host | default('all') }}"
+  become: True
+  become_method: 'sudo'
+  become_user: 'root'
+  #vars_files:
+  #  - "{{ sudosecret }}"
+
+  roles:
+    - {role: users, tags: users}
+    - {role: base, tags: base}
+    - {role: network, tags: network}
+    - {role: sudo, tags: sudo}
+    - {role: motd, tags: motd}
+    - {role: sshd, tags: sshd}
+    - {role: iptables, tags: iptables}

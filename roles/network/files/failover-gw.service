@@ -1,0 +1,10 @@
+[Unit]
+Description=Switch backup internet providers
+After=networking.service
+
+[Service]
+ExecStart=/bin/bash -c 'while true; do /opt/admin/bin/failover-gw.sh; done'
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

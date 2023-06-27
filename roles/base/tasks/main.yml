@@ -1,0 +1,94 @@
+---
+
+- name: Include os-specific vars
+  include: 'vars.yml'
+
+- name: Install EPEL repo
+  package: name=epel-release state=present
+  when: ansible_os_family == "RedHat" and ansible_distribution != 'Fedora'
+
+- name: install base packages for Debian
+  package: name="{{ item }}" state=present
+  when: ansible_os_family == "Debian"
+  with_items:
+    - bash-completion
+    - bc
+    - curl
+    - gcc
+    - git
+    - htop
+    - lsof
+    - man
+    - mc
+    - net-tools
+    - rsync
+    - screen
+    - sudo
+    - tcpdump
+    - telnet
+    - traceroute
+    - unzip
+    - wget
+    - bzip2
+    - gpg
+    - python3-pip
+    - tree
+    - atop
+    - vim
+    - "{{ base_distribution_packages }}"
+
+- name: install base packages for Redhat
+  package: name="{{ item }}" state=present
+  when: ansible_os_family == "RedHat"
+  with_items:
+    - atop
+    - bash-completion
+    - bc
+    - curl
+    - gcc
+    - git
+    - htop
+    - lsof
+    - lvm2
+    - man
+    - mc
+    - mosh
+    - net-tools
+    - rsync
+    - screen
+    - sudo
+    - tcpdump
+    - telnet
+    - tmux
+    - traceroute
+    - unzip
+    - wget
+    - bzip2
+    - mlocate
+    - dkms
+    - python3-pip
+    - vim
+    - "{{ base_distribution_packages }}"
+
+- name: install group packages
+  package: name="{{ item }}" state=present
+  with_items: "{{ group_packages | default([]) }}"
+  when: item | count > 0
+
+- name: install host packages
+  package: name="{{ item }}" state=present
+  with_items: "{{ host_packages | default([]) }}"
+  when: item | count > 0
+
+- name: default pkgs to remove
+  action: package state=removed name="{{item}}"
+  when: ansible_os_family == "RedHat"
+  with_items:
+  - firewalld
+  - PackageKit*
+  - sendmail
+
+- name: copy bashrc file for root user
+  template: src=bashrc_{{ ansible_os_family }}.j2 dest=/root/.bashrc owner=root group=root mode=0640
+  tags:
+    - bashrc
