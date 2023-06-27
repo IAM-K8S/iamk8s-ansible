@@ -71,4 +71,5 @@ iptables
 ![image](https://github.com/IAM-K8S/iamk8s-ansible/assets/3997208/84379649-5a74-4591-a0e4-a848f0d534f4)
 
 weather
+![image](https://github.com/IAM-K8S/iamk8s-ansible/assets/3997208/8d86487b-9beb-4bef-813f-7db851dbf4d6)
 
