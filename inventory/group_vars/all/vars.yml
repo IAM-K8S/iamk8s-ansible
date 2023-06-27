@@ -14,12 +14,12 @@ ssh_x11_forwarding: 'yes'
 #weather_city: NewYork
 
 ### PASSWORDS
-default_linux_password: "$6$rounds=656000$.rafGDmf4ABFzI1Y$GEYKgQ0S3TfAFrgbSCYeFxsYb4LXaccGAz/5K9JaNMB7qpJABcQopE8n7H2nKclI6oyN5zzkdRI2EBrDqDMIj/"
+default_linux_password: "$6$rounds=656000$.rafGDmf4ABFzI1Y$GEYKgQ0S3TfAFrgbsYb4LXaccGAz/5K9JaNMB7qpJABcQopE8n7H2nKclI6oyN5zzkdRI2EBrDqDMIj/"
 
 company_ssh_keys:
-  kutaj: 'ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEA8EID85ItZ/kxpN6dTqutrEuaXnT0EphDjgtVDitT8rFAsR+ounutdWMEd0WtMgXG974K12py/QYp7JL8Q3nr8PJEl9Jzhs2iwp3gIGEn8CsB7+vzjloNVkE/vfdXAZDUlyKB/YyJyf1Nji8JCpQOuCQlQWuB2B7wNNmvUyWc9JiuycMT7C0mtvfktkNoBEg2vz2aKGtpxvpi2uEZ6j8HpBeLpS4GoGq5Ha8AqWD8h+ZF7zlVMd2tVxhsQWQqiY3V0lisi1EPUxsmD+UF5BiEsxAc2FOmu1juvpkHSNwFSIF6xV7xVfZLJ2boFy9zqkeJiBzZWVYssk4W0GXF3Eyl6w== kutaj'
+  username: 'ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEA8EID85ItZ/kxpN6dTqutrEuaXnT0EphDjgtVDitT8rFAsR+ounutdWMEd0WtMgXG974K12py/QYp7JL8Q3nr8PJEl9Jzhs2iwp3gIGEn8CsB7+vzjloNVkE/vfdXAZDUlyKB/YyJyf1Nji8JCpQOuCQlQWuB2B7wNNmvUyWc9JiuycMT7C0mtvfktkNoBEg2vz2aKGtpxvpi2uEZ6j8HpBeLpS4GoGq5Ha8AqWD8h+ZF7zlVMd2tVxhsQWQqiY3V0lisi1EPUxsmD+UF5BiEsxAc2FOmu1juvpkHSNwFSIF6xV7xVfZLJ2boFy9zqkeJiBzZWVYssk4W0GXF3Eyl6w== kutaj'
 company_admins_ssh_keys:
-  - "{{ company_ssh_keys.kutaj }}"
+  - "{{ company_ssh_keys.username }}"
 
 ### ADMIN GROUPS
 sysusers_groups: 
@@ -28,15 +28,15 @@ sysusers_groups:
 
 ### SYSUSERS ###
 sysusers_users:
-  'stepankutaj':
-    name: 'stepankutaj'
+  'username':
+    name: 'username'
     #groups: "{% if ansible_os_family == 'Debian' %}['sudo']{% else %}['wheel']{% endif %}" # FOR NORMAL USERS!!!
     groups: ['admin'] #Group admin it's only for administrators. Sudo will be without password!
-    password: '$6$rounds=656000$.rafGDmf4ABFzI1Y$GEYKgQ0S3TfAFrgbSCYeFxsYb4LXaccGAz/5K9JaNMB7qpJABcQopE8n7H2nKclI6oyN5zzkdRI2EBrDqDMIj/'
-    comment: 'Stepan Kutaj'
+    password: '$6$rounds=656000$.rafGDmf4ABFzI1Y$GEYKgQ0S3TfAFrgbSCYeFxsYb4LXaccGAz/5K9JaNMB7qpJABcQopE8KclI6oyN5zzkdRI2EBrDqDMIj/'
+    comment: 'New Username'
     shell: "{% if ansible_os_family == 'FreeBSD' %}/usr/local/bin/bash{% else %}/bin/bash{% endif %}"
     ssh_keys:
-      - "{{ company_ssh_keys.kutaj }}"
+      - "{{ company_ssh_keys.username }}"
 
   'root':
     name: root
@@ -54,7 +54,7 @@ sysusers_users:
 motd: "If you need assistance please contact: info@domain.tld"
 
 ## SERVER VARIABLES ##
-local_net: '10.10.10.0/24'
+local_net: '1.1.1.0/24'
 
 iptables:
   trusted_hosts:
