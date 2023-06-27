@@ -65,10 +65,10 @@ ansible-playbook playbook/base.yml
 </pre>
 
 motd
-![image](https://github.com/IAM-K8S/iamk8s-ansible/assets/3997208/34e07856-ab14-4b6c-8cd4-e33236952c51)
+![image](https://github.com/IAM-K8S/iamk8s-ansible/assets/3997208/f476105e-03a5-40d4-8dc2-1e2187610345)
 
 iptables
-![image](https://github.com/IAM-K8S/iamk8s-ansible/assets/3997208/17e9cbad-91af-4bb6-8d93-86c515e53ec1)
+![image](https://github.com/IAM-K8S/iamk8s-ansible/assets/3997208/84379649-5a74-4591-a0e4-a848f0d534f4)
 
 weather
-![image](https://github.com/IAM-K8S/iamk8s-ansible/assets/3997208/4332da70-4440-474d-8250-82917fa804be)
+
