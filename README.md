@@ -1,5 +1,5 @@
-<h1 align="center">Hi 👋, I'm Stepan Kutaj</h1>
-<h3 align="center">A passionate Linux and DevOps admin</h3>
+<h1 align="center">Hi, I'm Stepan Kutaj</h1>
+<h3 align="center">A passionate Linux and DevOps</h3>
 
 <p align="left"> <img src="https://komarev.com/ghpvc/?username=stepankutaj&label=Profile%20views&color=0e75b6&style=flat" alt="stepankutaj" /> </p>
 
@@ -16,14 +16,29 @@
 </p>
 
 <h3 align="left">Languages and Tools:</h3>
-<p align="left"> <a href="https://www.gnu.org/software/bash/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/gnu_bash/gnu_bash-icon.svg" alt="bash" width="40" height="40"/> </a> <a href="https://git-scm.com/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg" alt="git" width="40" height="40"/> </a> <a href="https://www.linux.org/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/linux/linux-original.svg" alt="linux" width="40" height="40"/> </a> </p>
+<p align="left"> <a href="https://www.gnu.org/software/bash/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/gnu_bash/gnu_bash-icon.svg" alt="bash" width="40" height="40"/> </a> <a href="https://www.linux.org/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/linux/linux-original.svg" alt="linux" width="40" height="40"/> </a> </p>
+
+<h2>Prerequisites</h2>
+Install Ansible application - <a href="https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html" target="_blank">Ansible documentation</a>
 
 <h2>Installation</h2>
+<p>Working with this linux distribution:</p>
+<b>Debian based</b>
+<ul>
+  <li>Debian 9/10/11/12  --- stretch/buster/bullseye/bookworm  </li>
+  <li>Ubuntu 20.04/22.04 --- Focal Fossa/Jammy Jellyfish</li>
+</ul>
+<b>RedHat based</b>
+<ul>
+  <li>RedHat Enterprise Linux 7/8/9</li>
+  <li>AlmaLinux 8/9</li>
+  <li>CentOS 8/9</li>
+</ul>
 <pre>
  git clone https://github.com/IAM-K8S/iamk8s-ansible
  cd iamk8s-ansible/
 </pre>
-Open inventory files and add linux host
+Open inventory files and add or modify linux host which will be updated.
 <pre>vim inventory/inventory</pre>
 
 for example:
@@ -32,14 +47,28 @@ for example:
 test.local.domain 
 </pre>
 
-check file vars.yml in group_vars and update default settings.
+Check file vars.yml in group_vars and update default settings.
 <pre>
- vim inventory/group_vars/all/vars.yml
+vim inventory/group_vars/all/vars.yml
 </pre>
+for example weather for New York:
+<pre>
+weather_city: NewYork
+</pre>
+You must remove spaces in city names.
 
-<h2>Run ansible</h2>
+<h2>Run Ansible</h2>
 just type...
 <pre>
 cd iamk8s-ansible/
 ansible-playbook playbook/base.yml
 </pre>
+
+motd
+![image](https://github.com/IAM-K8S/iamk8s-ansible/assets/3997208/34e07856-ab14-4b6c-8cd4-e33236952c51)
+
+iptables
+![image](https://github.com/IAM-K8S/iamk8s-ansible/assets/3997208/17e9cbad-91af-4bb6-8d93-86c515e53ec1)
+
+weather
+![image](https://github.com/IAM-K8S/iamk8s-ansible/assets/3997208/4332da70-4440-474d-8250-82917fa804be)
